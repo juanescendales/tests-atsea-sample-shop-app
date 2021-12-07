@@ -1,27 +1,27 @@
 {
-  "name": "final-homework-tests",
+  "name": "tests-atsea-sample-shop-app",
   "version": "1.0.0",
-  "description": "Final homework tests for Praxis 2021-2",
+  "description": "Praxis UNAL 2021| Final Project",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist",
     "lint": "eslint test/**/*.{ts,js} src/**/*.{ts,js}",
     "build": "npm run clean && tsc",
-    "test": "mocha -r tsconfig-paths/register -r ts-node/register \"test/**/*.test.ts\""
+    "test:api": "mocha -r tsconfig-paths/register -r ts-node/register \"test/api/**/*.test.ts\""
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Rendxn/praxis-final-tests-template.git"
+    "url": "git+https://github.com/juanescendales/tests-atsea-sample-shop-app"
   },
   "keywords": [
     "test"
   ],
-  "author": "Santiago Rendon <santirg2000@gmail.com>",
+  "author": "Juan Esteban Cendales <juanescendales@gmail.com> & Juan Pablo Ortega <jportegame@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Rendxn/praxis-final-tests-template/issues"
+    "url": "https://github.com/juanescendales/tests-atsea-sample-shop-app/issues"
   },
-  "homepage": "https://github.com/Rendxn/praxis-final-tests-template#readme",
+  "homepage": "https://github.com/juanescendales/tests-atsea-sample-shop-app#readme",
   "devDependencies": {
     "@types/chai": "^4.2.22",
     "@types/mocha": "^9.0.0",
