@@ -21,7 +21,7 @@ jobs:
       
     - name: Creating env
       run: |
-        echo ${{ secrets.API_URL }} > .env
+        echo ${{ secrets.API_URL }} > ".env"
         ls
         
     - name: Use Node.js ${{ env.NODE_VERSION }}
