@@ -18,6 +18,9 @@ jobs:
     steps:
     - name: Checkout to branch ${{ env.DEFAULT_BRANCH }}
       uses: actions/checkout@v2
+    - run: |
+        echo ${{ secrets.API_URL }} > .env
+        ls
     - name: Use Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v1
       with:
@@ -30,9 +33,6 @@ jobs:
         aws-region: ${{ env.AWS_REGION }}
     - run: npm ci
     - name: Creating .env
-    - run: |
-        echo ${{ secrets.API_URL }} > .env
-        ls
     - name: Running API tests
       run: npm run test:api
     - name: Upload reports to AWS bucket
