@@ -55,7 +55,7 @@ jobs:
 
     env:
       DEFAULT_BRANCH: master
-      NODE_VERSION: 14.x
+      NODE_VERSION: 16.x
       AWS_REGION: us-east-2
 
     steps:
