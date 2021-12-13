@@ -39,6 +39,8 @@ jobs:
     - run: npm ci
     
     - name: Running API tests
+      env:
+        NODE_TLS_REJECT_UNAUTHORIZED: '0'
       run: npm run test:api
       
     - name: Upload reports to AWS bucket
