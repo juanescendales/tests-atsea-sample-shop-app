@@ -8,7 +8,7 @@
     "lint": "eslint test/**/*.{ts,js} src/**/*.{ts,js}",
     "build": "npm run clean && tsc",
     "test:api": "mocha -r tsconfig-paths/register -r ts-node/register \"test/api/**/*.test.ts\"  --reporter mochawesome --reporter-options reportDir=report/report-api,reportFilename=index.html",
-    "test:ui": "npm run build && protractor dist/protractor/local.config.js"
+    "test:ui": "npm run build && rm -rf report/report-ui && protractor dist/protractor/local.config.js"
   },
   "repository": {
     "type": "git",

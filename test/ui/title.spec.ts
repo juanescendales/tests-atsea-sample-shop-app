@@ -1,16 +1,19 @@
 import { expect } from 'chai';
 import { browser } from 'protractor';
 
-describe('Open Atsea shop', () => {
-  describe('when open the page', () => {
-    beforeEach(async () => {
-      await browser.get('http://host.docker.internal:8080');
+import dotenv = require('dotenv')
+dotenv.config()
+
+describe('Title', () => {
+  describe('when the page is open', () => {
+
+    before(async () => {
+      await browser.get(process.env.HOST_DOCKER_INTERNAL);
     });
 
-    it('then should have a title', async () => {
+    it('Should have a title equal to "Atsea Shop"', async () => {
       expect(await browser.getTitle()).to.equal('Atsea Shop');
     });
-
-    // afterEach()
+    
   });
 });
