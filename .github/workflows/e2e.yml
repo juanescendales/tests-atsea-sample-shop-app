@@ -55,7 +55,7 @@ jobs:
 
     env:
       DEFAULT_BRANCH: master
-      NODE_VERSION: 16.x
+      NODE_VERSION: 14.x
       AWS_REGION: us-east-2
 
     steps:
@@ -80,9 +80,7 @@ jobs:
         aws-region: ${{ env.AWS_REGION }}
 
     - name: Install dependencies
-      run: |
-        npm ci
-        npx webdriver-manager update
+      run: npm ci
 
     - name: Build the containers stack
       run: docker-compose up -d
