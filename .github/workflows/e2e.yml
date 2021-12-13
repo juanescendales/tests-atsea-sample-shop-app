@@ -29,6 +29,10 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
     - run: npm ci
+    - name: Creating .env
+    - run: |
+      echo ${{ secrets.API_URL }} > .env
+      ls
     - name: Running API tests
       run: npm run test:api
     - name: Upload reports to AWS bucket
