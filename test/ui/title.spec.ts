@@ -8,12 +8,12 @@ describe('Title', () => {
   describe('when the page is open', () => {
 
     before(async () => {
-      await browser.get(process.env.HOST_DOCKER_INTERNAL);
+      await browser.get(process.env.UI_URL);
     });
 
     it('Should have a title equal to "Atsea Shop"', async () => {
       expect(await browser.getTitle()).to.equal('Atsea Shop');
     });
-    
+
   });
 });

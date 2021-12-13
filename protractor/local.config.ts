@@ -6,7 +6,7 @@ dotenv.config()
 export const config: Config = {
   framework: 'mocha',
   specs: ['../test/ui/**/*.spec.js'],
-  seleniumAddress: process.env.SELENIUM_ADDRESS,
+  seleniumAddress: "http://0.0.0.0:4444",
   SELENIUM_PROMISE_MANAGER: false,
   mochaOpts: {
     reporter: 'mochawesome-screenshots',
@@ -18,7 +18,7 @@ export const config: Config = {
       shortScrFileNames: false,
       overwrite: false,
       multiReport: true,
-  }, 
+  },
     timeout: 600000,
   },
   onPrepare: async () => {
@@ -32,12 +32,23 @@ export const config: Config = {
       name: 'firefox-tests',
       shardTestFiles: true,
       maxInstances: 1,
+      acceptInsecureCerts: true,
+      'moz:firefoxOptions': {
+        args: ['-headless'],
+      },
     },
     {
       browserName: 'chrome',
       name: 'chrome-tests',
       shardTestFiles: true,
       maxInstances: 1,
+      chromeOptions: {
+        args: [
+          '--disable-popup-blocking',
+          '--no-default-browser-check',
+          '--ignore-certificate-errors',
+        ],
+      },
     },
   ],
 };

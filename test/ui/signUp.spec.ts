@@ -20,9 +20,9 @@ describe('Sing Up Atsea shop', () => {
     }
 
     before(async () => {
-        await browser.get(process.env.HOST_DOCKER_INTERNAL);
+        await browser.get(process.env.UI_URL);
       });
-      
+
     describe('Click in Create User button', () => {
         it('then should appear sign up form with title "Create your user ID"', async () => {
 
