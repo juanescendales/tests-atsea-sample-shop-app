@@ -3,6 +3,8 @@ import { browser, ExpectedConditions } from 'protractor';
 import { IndexAuthentication, SignInAuthentication } from '../../src/pages';
 import { Customer } from '../../src/models/Customer';
 
+impimport { StatusCodes } from 'http-status-codes'
+
 import dotenv = require('dotenv')
 dotenv.config()
 
@@ -28,7 +30,6 @@ const customer: Customer = {
 let customerId = 0
 
 describe('Sing In Atsea shop', () => {
-
     before(async () => {
       await del(`${process.env.API_URL}/api/customer/`)
       try {
@@ -79,10 +80,9 @@ describe('Sing In Atsea shop', () => {
 
     after(async () => {
         try {
-          await del(`${process.env.API_URL}/api/customer/${customerId}`)
-          await browser.sleep(10000)
-        } catch (error) {
-            Promise.reject(error)
+          const response = await del(`${process.env.API_URL}/api/customer/${customerId}`)
+          expect(response.status).to.equal(StatusCodes.NO_CONTENT)
+.reject(error)
         }
       })
 });

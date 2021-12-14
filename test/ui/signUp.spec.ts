@@ -1,14 +1,14 @@
 import { expect } from 'chai';
-import { StatusCodes } from 'http-status-codes'
 import { browser, ExpectedConditions } from 'protractor';
 import { IndexAuthentication, SignUpAuthentication } from '../../src/pages';
+import { StatusCodes } from 'http-status-codes'
 
 import dotenv = require('dotenv')
 dotenv.config()
 
 const EC = ExpectedConditions
 
-import { del, get } from 'superagent'
+import { del } from 'superagent'
 
 const indexAuthentication: IndexAuthentication = new IndexAuthentication()
 const signUpAuthentication: SignUpAuthentication = new SignUpAuthentication()
@@ -22,6 +22,13 @@ describe('Sing Up Atsea shop', () => {
 
     before(async () => {
         await browser.get(process.env.UI_URL);
+        try {
+          const response = await del(`${process.env.API_URL}/api/customer/`)
+          expect(response.status).to.equal(StatusCodes.NO_CONTENT)
+        } catch (error) {
+            console.log(error)
+            Promise.reject(error)
+        }
       });
 
     describe('Click in Create User button', () => {
@@ -60,10 +67,8 @@ describe('Sing Up Atsea shop', () => {
 
     after(async () => {
       try {
-        const response = await get(`${process.env.API_URL}/api/customer/username=${user.username}`)
-        expect(response.status).to.equal(StatusCodes.OK)
-        expect(response.body).to.have.property('customerId');
-        await del(`${process.env.API_URL}/api/customer/${response.body.customerId}`)
+        const response = await del(`${process.env.API_URL}/api/customer/`)
+        expect(response.status).to.equal(StatusCodes.NO_CONTENT)
         await browser.sleep(10000)
       } catch (error) {
           Promise.reject(error)
