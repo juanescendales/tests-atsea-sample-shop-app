@@ -1,4 +1,5 @@
 import { browser, Config } from 'protractor';
+import { createUser, deleteUsers } from './hooks'
 
 import dotenv = require('dotenv')
 dotenv.config()
@@ -8,6 +9,18 @@ export const config: Config = {
   specs: ['../test/ui/**/*.spec.js'],
   seleniumAddress: "http://0.0.0.0:4444",
   SELENIUM_PROMISE_MANAGER: false,
+  beforeLaunch: async () => {
+    await deleteUsers()
+    await createUser()
+  },
+  onPrepare: async () => {
+    await browser.waitForAngularEnabled(false);
+    await browser.manage().window().maximize();
+    browser.manage().timeouts().implicitlyWait(0);
+  },
+  afterLaunch: async () => {
+    await deleteUsers()
+  },
   mochaOpts: {
     reporter: 'mochawesome-screenshots',
     reporterOptions: {
@@ -20,11 +33,6 @@ export const config: Config = {
       multiReport: true,
     },
     timeout: 600000,
-  },
-  onPrepare: async () => {
-    await browser.waitForAngularEnabled(false);
-    await browser.manage().window().maximize();
-    browser.manage().timeouts().implicitlyWait(0);
   },
   multiCapabilities: [
     {

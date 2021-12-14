@@ -20,7 +20,6 @@ const user = {
 describe('Sing Up Atsea shop', () => {
 
     before(async () => {
-        await del(`${process.env.API_URL}/api/customer/`)
         await browser.get(process.env.UI_URL);
         browser.sleep(10000);
       });
@@ -60,11 +59,6 @@ describe('Sing Up Atsea shop', () => {
     });
 
     after(async () => {
-      try {
-        await del(`${process.env.API_URL}/api/customer/`)
-        await browser.sleep(10000)
-      } catch (error) {
-          Promise.reject(error)
-      }
+      await del(`${process.env.API_URL}/api/customer/`)
     });
 });
