@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { browser, ExpectedConditions } from 'protractor';
 import { IndexAuthentication, SignInAuthentication } from '../../src/pages';
 import { Customer } from '../../src/models/Customer';
-import { StatusCodes } from 'http-status-codes'
 
 import dotenv = require('dotenv')
 dotenv.config()
@@ -26,23 +25,17 @@ const customer: Customer = {
     role       : "USER"
 }
 
-let customerId = 0
-
 describe('Sing In Atsea shop', () => {
     before(async () => {
       await del(`${process.env.API_URL}/api/customer/`)
       try {
-        const response = await post(`${process.env.API_URL}/api/customer/`)
-          .send(customer)
-        if(response?.body?.customerId) {
-          customerId = response.body.customerId
-        }
-        await browser.sleep(10000)
+        await post(`${process.env.API_URL}/api/customer/`).send(customer)
       } catch (error) {
         console.log(error)
         Promise.reject(error)
       }
       await browser.get(process.env.UI_URL);
+      browser.sleep(5000);
     })
 
     describe('Click in Sign In button', () => {
@@ -79,8 +72,7 @@ describe('Sing In Atsea shop', () => {
 
     after(async () => {
         try {
-          const response = await del(`${process.env.API_URL}/api/customer/${customerId}`)
-          expect(response.status).to.equal(StatusCodes.NO_CONTENT)
+          await del(`${process.env.API_URL}/api/customer/`)
           await browser.sleep(10000)
         } catch (error) {
             Promise.reject(error)

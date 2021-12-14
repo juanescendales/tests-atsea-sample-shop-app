@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import { browser, ExpectedConditions } from 'protractor';
 import { IndexAuthentication, SignUpAuthentication } from '../../src/pages';
-import { StatusCodes } from 'http-status-codes'
 
 import dotenv = require('dotenv')
 dotenv.config()
@@ -21,14 +20,9 @@ const user = {
 describe('Sing Up Atsea shop', () => {
 
     before(async () => {
+        await del(`${process.env.API_URL}/api/customer/`)
         await browser.get(process.env.UI_URL);
-        try {
-          const response = await del(`${process.env.API_URL}/api/customer/`)
-          expect(response.status).to.equal(StatusCodes.NO_CONTENT)
-        } catch (error) {
-            console.log(error)
-            Promise.reject(error)
-        }
+        browser.sleep(5000);
       });
 
     describe('Click in Create User button', () => {
@@ -67,8 +61,7 @@ describe('Sing Up Atsea shop', () => {
 
     after(async () => {
       try {
-        const response = await del(`${process.env.API_URL}/api/customer/`)
-        expect(response.status).to.equal(StatusCodes.NO_CONTENT)
+        await del(`${process.env.API_URL}/api/customer/`)
         await browser.sleep(10000)
       } catch (error) {
           Promise.reject(error)

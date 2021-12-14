@@ -27,22 +27,18 @@ const customer: Customer = {
     role       : "USER"
 }
 
-let customerId = 0
 
 describe('Shop Process Atsea shop', () => {
     before(async () => {
-      await browser.get(process.env.UI_URL);
-
+      await del(`${process.env.API_URL}/api/customer/`)
       try {
-        const response = await post(`${process.env.API_URL}/api/customer/`)
-          .send(customer)
-        if(response?.body?.customerId) {
-          customerId = response.body.customerId
-        }
+        await post(`${process.env.API_URL}/api/customer/`).send(customer)
       } catch (error) {
         console.log(error)
         Promise.reject(error)
       }
+      await browser.get(process.env.UI_URL);
+      browser.sleep(5000);
     })
 
   describe('Sign In User', () => {
@@ -105,7 +101,7 @@ describe('Shop Process Atsea shop', () => {
 
     after(async () => {
         try {
-          await del(`${process.env.API_URL}/api/customer/${customerId}`)
+          await del(`${process.env.API_URL}/api/customer/`)
         } catch (error) {
             Promise.reject(error)
         }
