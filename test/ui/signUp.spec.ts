@@ -22,7 +22,7 @@ describe('Sing Up Atsea shop', () => {
     before(async () => {
         await del(`${process.env.API_URL}/api/customer/`)
         await browser.get(process.env.UI_URL);
-        browser.sleep(5000);
+        browser.sleep(10000);
       });
 
     describe('Click in Create User button', () => {

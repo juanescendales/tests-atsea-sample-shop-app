@@ -43,7 +43,7 @@ describe('Sing In Atsea shop', () => {
 
           await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignInButton()), 40000)
           await indexAuthentication.clickSignInButton()
-          await browser.wait(EC.textToBePresentInElement(signInAuthentication.getTitle(),"Sign in to your account"))
+          await browser.wait(EC.textToBePresentInElement(signInAuthentication.getTitle(),"Sign in to your account"),40000)
 
         });
     });
