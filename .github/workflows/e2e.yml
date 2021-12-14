@@ -48,7 +48,6 @@ jobs:
 
   ui:
     name: UI tests
-
     runs-on: ubuntu-latest
 
     env:
