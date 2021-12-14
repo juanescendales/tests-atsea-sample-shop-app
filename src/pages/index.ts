@@ -1,3 +1,5 @@
 export { IndexAuthentication } from './IndexAuthentication.page'
 export { SignUpAuthentication } from './SignUpAuthentication.page'
 export { SignInAuthentication } from './SignInAuthentication.page'
+export { IndexShop } from './IndexShop.page'
+export { Checkout } from './Checkout.page'

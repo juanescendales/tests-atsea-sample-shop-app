@@ -1,8 +1,7 @@
 import { expect } from 'chai';
 import { browser, ExpectedConditions } from 'protractor';
-import { IndexAuthentication, SignInAuthentication } from '../../src/pages';
+import { IndexAuthentication, IndexShop, SignInAuthentication, Checkout } from '../../src/pages';
 import { Customer } from '../../src/models/Customer';
-import { StatusCodes } from 'http-status-codes'
 
 import dotenv = require('dotenv')
 dotenv.config()
@@ -12,6 +11,8 @@ const EC = ExpectedConditions
 import { del, post } from 'superagent'
 
 const indexAuthentication: IndexAuthentication = new IndexAuthentication()
+const indexShop: IndexShop = new IndexShop()
+const checkout: Checkout = new Checkout()
 const signInAuthentication: SignInAuthentication = new SignInAuthentication()
 
 const customer: Customer = {
@@ -28,47 +29,72 @@ const customer: Customer = {
 
 let customerId = 0
 
-describe('Sing In Atsea shop', () => {
+describe('Shop Process Atsea shop', () => {
     before(async () => {
       await browser.get(process.env.UI_URL);
- 
+
       try {
         const response = await post(`${process.env.API_URL}/api/customer/`)
           .send(customer)
         if(response?.body?.customerId) {
           customerId = response.body.customerId
         }
-        await browser.sleep(10000)
       } catch (error) {
         console.log(error)
         Promise.reject(error)
       }
     })
 
-    describe('Click in Sign In button', () => {
-        it('then should appear sign In form with title "Sign in to your account"', async () => {
+  describe('Sign In User', () => {
+        it('then should loged in the user and show button Sign Out and "Welcome!" message', async () => {
 
           await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignInButton()), 20000)
           await indexAuthentication.clickSignInButton()
           await browser.wait(EC.textToBePresentInElement(signInAuthentication.getTitle(),"Sign in to your account"))
-
-        });
-    });
-
-    describe('Put data in the inputs and click in sign in button', () => {
-        it('then should loged in the user and show button Sign Out and "Welcome!" message', async () => {
-
           await signInAuthentication.signIn(customer.username,customer.password)
-
           await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),20000)
           expect(await indexAuthentication.getWelcomeMessage().getText())
             .to.equal('Welcome!')
           await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 20000)
+
         });
     });
 
-    describe('Sing Out after sign in', () => {
-        it('Should to appear Sign Out button and after click should sign out the user', async () => {
+  describe('Add two products to cart and proceed to checkout', () => {
+      it('then should view checkout view', async () => {
+
+        await browser.wait(EC.visibilityOf(indexShop.getProductListWrapper()),20000)
+        expect(await indexShop.getProductList().count()).to.be.greaterThan(0)
+        await indexShop.addTwoProductsRandomToCart()
+        browser.sleep(5000);
+        expect(await indexShop.getCartQuantity().getText()).to.equal("2");
+        await indexShop.clickCheckOutButton();
+        browser.sleep(10000);
+
+      });
+  });
+
+  describe('Fill card and billing information and completer order', () => {
+    it('then should view successfully message and continue shoping button', async () => {
+
+      await browser.wait(EC.visibilityOf(checkout.getFormSection()),20000)
+      expect(await checkout.getTitle().getText()).to.equal('Checkout')
+      await checkout.fillCreditCardInformation('a', 'a','1','1','1')
+      browser.sleep(5000);
+      await checkout.fillBillingInformation('a', 'a','a','a')
+      browser.sleep(5000);
+      await checkout.clickCompleteOrder();
+      await browser.wait(EC.visibilityOf(checkout.getSuccessfullyMessage()),20000)
+      await checkout.clickContinueShopping();
+      browser.sleep(5000);
+
+    });
+});
+
+
+
+    describe('Sing Out after complete order', () => {
+        it('Should to appear Sign Out button and after click in continue shopping', async () => {
           await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),20000)
           expect(await indexAuthentication.getWelcomeMessage().getText())
             .to.equal('Welcome!')
@@ -79,9 +105,7 @@ describe('Sing In Atsea shop', () => {
 
     after(async () => {
         try {
-          const response = await del(`${process.env.API_URL}/api/customer/${customerId}`)
-          expect(response.status).to.equal(StatusCodes.NO_CONTENT)
-          await browser.sleep(10000)
+          await del(`${process.env.API_URL}/api/customer/${customerId}`)
         } catch (error) {
             Promise.reject(error)
         }
