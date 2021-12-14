@@ -7,9 +7,9 @@ export class IndexAuthentication {
   private welcomeMessage: ElementFinder;
 
   constructor() {
-    this.signUpButton = $('div.buttonSection > div:nth-child(1) > button');
-    this.SignInButton = $('div.buttonSection > div:nth-child(2) > button');
-    this.SignOutButton = $('div.buttonSection > div:nth-child(1) > button');
+    this.signUpButton = $('div.buttonSection > div > button:nth-child(1)');
+    this.SignInButton = $('div.buttonSection > div > button:nth-child(2)');
+    this.SignOutButton = $('div.buttonSection .welcomeMessage + button');
     this.welcomeMessage = $('span.welcomeMessage');
   }
 
@@ -17,12 +17,24 @@ export class IndexAuthentication {
     await this.signUpButton.click();
   }
 
+  public getSignUpButton(): ElementFinder {
+    return this.signUpButton
+  }
+
   public async clickSignInButton(): Promise<void> {
     await this.SignInButton.click();
   }
 
+  public getSignInButton(): ElementFinder {
+    return this.SignInButton
+  }
+
   public async clickSignOutButton(): Promise<void> {
     await this.SignOutButton.click();
+  }
+
+  public getSignOutButton(): ElementFinder {
+    return this.SignOutButton
   }
 
   public getWelcomeMessage(): ElementFinder {
