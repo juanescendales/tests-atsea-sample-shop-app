@@ -37,6 +37,7 @@ describe('Sing In Atsea shop', () => {
         if(response?.body?.customerId) {
           customerId = response.body.customerId
         }
+        await browser.sleep(10000)
       } catch (error) {
         console.log(error)
         Promise.reject(error)
@@ -46,7 +47,7 @@ describe('Sing In Atsea shop', () => {
     describe('Click in Sign In button', () => {
         it('then should appear sign In form with title "Sign in to your account"', async () => {
 
-          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignInButton()), 20000)
+          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignInButton()), 50000)
           await indexAuthentication.clickSignInButton()
           await browser.wait(EC.textToBePresentInElement(signInAuthentication.getTitle(),"Sign in to your account"))
 
@@ -58,19 +59,19 @@ describe('Sing In Atsea shop', () => {
 
           await signInAuthentication.signIn(customer.username,customer.password)
 
-          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),20000)
+          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),50000)
           expect(await indexAuthentication.getWelcomeMessage().getText())
             .to.equal('Welcome!')
-          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 20000)
+          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 50000)
         });
     });
 
     describe('Sing Out after sign in', () => {
         it('Should to appear Sign Out button and after click should sign out the user', async () => {
-          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),20000)
+          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),50000)
           expect(await indexAuthentication.getWelcomeMessage().getText())
             .to.equal('Welcome!')
-          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 20000)
+          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 50000)
           await indexAuthentication.clickSignOutButton()
         });
     });
@@ -78,6 +79,7 @@ describe('Sing In Atsea shop', () => {
     after(async () => {
         try {
           await del(`${process.env.API_URL}/api/customer/${customerId}`)
+          await browser.sleep(10000)
         } catch (error) {
             Promise.reject(error)
         }
