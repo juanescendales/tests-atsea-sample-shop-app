@@ -2,6 +2,7 @@ import { get } from 'superagent'
 import { StatusCodes } from 'http-status-codes'
 import * as chai from 'chai'
 import * as chaiJsonSchema from 'chai-json-schema'
+import { productSchema, arraySchema } from '../../src/schemas/Product.schema';
 
 chai.use(chaiJsonSchema)
 
@@ -9,35 +10,6 @@ import dotenv = require('dotenv')
 dotenv.config()
 
 const expect = chai.expect
-
-const productSchema = {
-  title: 'Product Schema',
-  type: 'object',
-  required: ['description', 'image', 'name', 'price', 'productId',],
-  properties: {
-    description: {
-      type: 'string',
-    },
-    image: {
-      type: 'string',
-    },
-    name: {
-      type: 'string',
-    },
-    price: {
-      type: 'number',
-    },
-    productId: {
-      type: 'integer',
-    },
-  },
-}
-
-const arraySchema = {
-    title: 'Products Array Schema',
-    type: 'array',
-    items: productSchema
-  }
 
 describe('Products', () => {
   describe('Get All Products', () => {

@@ -2,6 +2,8 @@ import { post, get, put, del } from 'superagent'
 import { StatusCodes } from 'http-status-codes'
 import * as chai from 'chai'
 import * as chaiJsonSchema from 'chai-json-schema'
+import { Customer } from '../../src/models/Customer';
+import { customerSchema } from '../../src/schemas/Customer.schema';
 
 chai.use(chaiJsonSchema)
 
@@ -12,7 +14,7 @@ const expect = chai.expect
 
 let customerId = 0
 
-const data = {
+const data: Customer = {
   customerId : 0,
   name       : "Sally Vallery",
   address    : "144 Townsend, San Francisco 99999",
@@ -20,43 +22,8 @@ const data = {
   phone      : "513 222 5555",
   username   : "sallyv",
   password   : "sallypassword",
-  enabled    : "true",
+  enabled    : true,
   role       : "USER"
-}
-
-const customerSchema = {
-  title: 'Customer Schema',
-  type: 'object',
-  required: ['customerId', 'name', 'address', 'email', 'username', 'phone'],
-  properties: {
-    customerId: {
-      type: 'integer',
-    },
-    name: {
-      type: 'string',
-    },
-    address: {
-      type: 'string',
-    },
-    email: {
-      type: 'string',
-    },
-    phone: {
-      type: 'string',
-    },
-    username: {
-      type: 'string',
-    },
-    password: {
-      type: 'string',
-    },
-    enabled: {
-      type: 'boolean',
-    },
-    role: {
-      type: 'string',
-    },
-  },
 }
 
 const updateData = (newAddres: string) => {

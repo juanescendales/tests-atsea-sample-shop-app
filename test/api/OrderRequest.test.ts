@@ -2,6 +2,8 @@ import { post, get, put, del } from 'superagent'
 import { StatusCodes } from 'http-status-codes'
 import * as chai from 'chai'
 import * as chaiJsonSchema from 'chai-json-schema'
+import { Order } from '../../src/models/Order';
+import { orderSchema, arraySchema } from '../../src/schemas/Order.schema';
 
 chai.use(chaiJsonSchema)
 
@@ -12,40 +14,14 @@ const expect = chai.expect
 
 let orderId = 0
 
-const data = {
+const data: Order = {
   orderId           : 1,
   orderDate         : "2017-02-28T19:52:39Z",
-  customerId        : "54321",
+  customerId        : 54321,
   productsOrdered   : {"1":1, "2":1, "3":1}
 }
 
-const orderSchema = {
-  title: 'Order Schema',
-  type: 'object',
-  required: ['orderId', 'orderDate', 'customerId', 'productsOrdered'],
-  properties: {
-    orderId: {
-      type: 'integer',
-    },
-    orderDate: {
-      type: 'string',
-    },
-    customerId: {
-      type: 'integer',
-    },
-    productsOrdered: {
-      type: 'object',
-    },
-  },
-}
-
-const arraySchema = {
-  title: 'Orders Array Schema',
-  type: 'array',
-  items: orderSchema
-}
-
-const updateData = (customerId: string) => {
+const updateData = (customerId: number) => {
   const newData = {...data}
   newData.customerId = customerId
   return newData
@@ -115,7 +91,7 @@ describe('Order', () => {
     it('PUT method for update an order with orderId', async () => {
 
       const response = await put(`${process.env.API_URL}/api/order/${orderId}`)
-        .send(updateData('8'))
+        .send(updateData(8))
       expect(response.status).to.equal(StatusCodes.OK)
       expect(response.body).to.be.jsonSchema(orderId)
       expect(response.body.customerId).to.be.eq(8);
@@ -127,7 +103,7 @@ describe('Order', () => {
 
       try {
         await put(`${process.env.API_URL}/api/order/0`)
-        .send(updateData('8'))
+        .send(updateData(8))
       } catch (error) {
         expect(error.response.status).to.equal(StatusCodes.NOT_FOUND)
       }

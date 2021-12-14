@@ -1,6 +1,7 @@
 import { post, del, get } from 'superagent'
 import { StatusCodes } from 'http-status-codes'
 import * as chai from 'chai'
+import { Customer } from '../../src/models/Customer';
 
 import dotenv = require('dotenv')
 dotenv.config()
@@ -13,7 +14,7 @@ describe('Login And Purchase', () => {
 
   let customerId = 0
     before(async () => {
-      const data = {
+      const data: Customer = {
         customerId : 0,
         name       : "Gordon",
         address    : "144 Townsend, San Francisco 99999",
@@ -21,7 +22,7 @@ describe('Login And Purchase', () => {
         phone      : "513 222 5555",
         username   : "gordon",
         password   : "gordonpassword",
-        enabled    : "true",
+        enabled    : true,
         role       : "USER"
       }
 
