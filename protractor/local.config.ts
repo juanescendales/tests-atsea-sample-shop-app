@@ -1,5 +1,5 @@
 import { browser, Config } from 'protractor';
-import { createUser, deleteUsers } from './hooks'
+import { createUser, deleteUsers } from './methods'
 
 import dotenv = require('dotenv')
 dotenv.config()
