@@ -34,7 +34,7 @@ export const config: Config = {
       maxInstances: 1,
       acceptInsecureCerts: true,
       'moz:firefoxOptions': {
-        args: ['-headless'],
+        args: ['--headless'],
       },
     },
     {
@@ -44,6 +44,9 @@ export const config: Config = {
       maxInstances: 1,
       chromeOptions: {
         args: [
+          '--headless',
+          '--disable-gpu',
+          '--window-size=1920,1080',
           '--disable-popup-blocking',
           '--no-default-browser-check',
           '--ignore-certificate-errors',

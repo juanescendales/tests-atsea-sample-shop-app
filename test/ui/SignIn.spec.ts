@@ -28,20 +28,21 @@ const customer: Customer = {
 let customerId = 0
 
 describe('Sing In Atsea shop', () => {
-    before(async () => {
-      await browser.get(process.env.UI_URL);
 
+    before(async () => {
+      await del(`${process.env.API_URL}/api/customer/`)
       try {
         const response = await post(`${process.env.API_URL}/api/customer/`)
           .send(customer)
         if(response?.body?.customerId) {
           customerId = response.body.customerId
         }
-        await browser.sleep(10000)
+        await browser.sleep(3000)
       } catch (error) {
         console.log(error)
         Promise.reject(error)
       }
+      await browser.get(process.env.UI_URL);
     })
 
     describe('Click in Sign In button', () => {

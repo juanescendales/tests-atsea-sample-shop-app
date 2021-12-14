@@ -37,10 +37,10 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Sleep for 90s
+    - name: Sleep for 50s
       uses: juliangruber/sleep-action@v1
       with:
-        time: 90s
+        time: 50s
 
     - name: Running API tests
       env:
@@ -87,10 +87,10 @@ jobs:
     - name: Build the containers stack
       run: docker-compose up -d
 
-    - name: Sleep for 90s
+    - name: Sleep for 50s
       uses: juliangruber/sleep-action@v1
       with:
-        time: 90s
+        time: 50s
 
     - name: Running UI tests
       env:
