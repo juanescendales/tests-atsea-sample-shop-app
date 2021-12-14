@@ -18,7 +18,7 @@ export const config: Config = {
       shortScrFileNames: false,
       overwrite: false,
       multiReport: true,
-  },
+    },
     timeout: 600000,
   },
   onPrepare: async () => {
