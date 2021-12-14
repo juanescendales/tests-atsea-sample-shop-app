@@ -30,7 +30,7 @@ let customerId = 0
 describe('Sing In Atsea shop', () => {
     before(async () => {
       await browser.get(process.env.UI_URL);
-      
+
       try {
         const response = await post(`${process.env.API_URL}/api/customer/`)
           .send(customer)
@@ -46,7 +46,7 @@ describe('Sing In Atsea shop', () => {
     describe('Click in Sign In button', () => {
         it('then should appear sign In form with title "Sign in to your account"', async () => {
 
-          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignInButton()), 10000)
+          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignInButton()), 20000)
           await indexAuthentication.clickSignInButton()
           await browser.wait(EC.textToBePresentInElement(signInAuthentication.getTitle(),"Sign in to your account"))
 
@@ -58,19 +58,19 @@ describe('Sing In Atsea shop', () => {
 
           await signInAuthentication.signIn(customer.username,customer.password)
 
-          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),10000)
+          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),20000)
           expect(await indexAuthentication.getWelcomeMessage().getText())
             .to.equal('Welcome!')
-          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 10000)
+          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 20000)
         });
     });
 
     describe('Sing Out after sign in', () => {
         it('Should to appear Sign Out button and after click should sign out the user', async () => {
-          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),10000)
+          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),20000)
           expect(await indexAuthentication.getWelcomeMessage().getText())
             .to.equal('Welcome!')
-          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 10000)
+          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 20000)
           await indexAuthentication.clickSignOutButton()
         });
     });
