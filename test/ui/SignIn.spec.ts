@@ -2,8 +2,7 @@ import { expect } from 'chai';
 import { browser, ExpectedConditions } from 'protractor';
 import { IndexAuthentication, SignInAuthentication } from '../../src/pages';
 import { Customer } from '../../src/models/Customer';
-
-impimport { StatusCodes } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 
 import dotenv = require('dotenv')
 dotenv.config()
@@ -38,7 +37,7 @@ describe('Sing In Atsea shop', () => {
         if(response?.body?.customerId) {
           customerId = response.body.customerId
         }
-        await browser.sleep(3000)
+        await browser.sleep(10000)
       } catch (error) {
         console.log(error)
         Promise.reject(error)
@@ -82,7 +81,9 @@ describe('Sing In Atsea shop', () => {
         try {
           const response = await del(`${process.env.API_URL}/api/customer/${customerId}`)
           expect(response.status).to.equal(StatusCodes.NO_CONTENT)
-.reject(error)
+          await browser.sleep(10000)
+        } catch (error) {
+            Promise.reject(error)
         }
       })
 });
