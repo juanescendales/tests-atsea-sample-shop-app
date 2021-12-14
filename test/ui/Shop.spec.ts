@@ -44,14 +44,14 @@ describe('Shop Process Atsea shop', () => {
   describe('Sign In User', () => {
         it('then should loged in the user and show button Sign Out and "Welcome!" message', async () => {
 
-          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignInButton()), 20000)
+          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignInButton()), 40000)
           await indexAuthentication.clickSignInButton()
           await browser.wait(EC.textToBePresentInElement(signInAuthentication.getTitle(),"Sign in to your account"))
           await signInAuthentication.signIn(customer.username,customer.password)
-          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),20000)
+          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),40000)
           expect(await indexAuthentication.getWelcomeMessage().getText())
             .to.equal('Welcome!')
-          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 20000)
+          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 40000)
 
         });
     });
@@ -59,7 +59,7 @@ describe('Shop Process Atsea shop', () => {
   describe('Add two products to cart and proceed to checkout', () => {
       it('then should view checkout view', async () => {
 
-        await browser.wait(EC.visibilityOf(indexShop.getProductListWrapper()),20000)
+        await browser.wait(EC.visibilityOf(indexShop.getProductListWrapper()),40000)
         expect(await indexShop.getProductList().count()).to.be.greaterThan(0)
         await indexShop.addTwoProductsRandomToCart()
         browser.sleep(5000);
@@ -73,14 +73,14 @@ describe('Shop Process Atsea shop', () => {
   describe('Fill card and billing information and completer order', () => {
     it('then should view successfully message and continue shoping button', async () => {
 
-      await browser.wait(EC.visibilityOf(checkout.getFormSection()),20000)
+      await browser.wait(EC.visibilityOf(checkout.getFormSection()),40000)
       expect(await checkout.getTitle().getText()).to.equal('Checkout')
       await checkout.fillCreditCardInformation('a', 'a','1','1','1')
       browser.sleep(5000);
       await checkout.fillBillingInformation('a', 'a','a','a')
       browser.sleep(5000);
       await checkout.clickCompleteOrder();
-      await browser.wait(EC.visibilityOf(checkout.getSuccessfullyMessage()),20000)
+      await browser.wait(EC.visibilityOf(checkout.getSuccessfullyMessage()),40000)
       await checkout.clickContinueShopping();
       browser.sleep(5000);
 
@@ -91,10 +91,10 @@ describe('Shop Process Atsea shop', () => {
 
     describe('Sing Out after complete order', () => {
         it('Should to appear Sign Out button and after click in continue shopping', async () => {
-          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),20000)
+          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),40000)
           expect(await indexAuthentication.getWelcomeMessage().getText())
             .to.equal('Welcome!')
-          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 20000)
+          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 40000)
           await indexAuthentication.clickSignOutButton()
         });
     });

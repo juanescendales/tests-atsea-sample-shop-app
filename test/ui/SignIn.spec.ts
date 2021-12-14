@@ -41,7 +41,7 @@ describe('Sing In Atsea shop', () => {
     describe('Click in Sign In button', () => {
         it('then should appear sign In form with title "Sign in to your account"', async () => {
 
-          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignInButton()), 30000)
+          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignInButton()), 40000)
           await indexAuthentication.clickSignInButton()
           await browser.wait(EC.textToBePresentInElement(signInAuthentication.getTitle(),"Sign in to your account"))
 
@@ -53,19 +53,19 @@ describe('Sing In Atsea shop', () => {
 
           await signInAuthentication.signIn(customer.username,customer.password)
 
-          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),30000)
+          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),40000)
           expect(await indexAuthentication.getWelcomeMessage().getText())
             .to.equal('Welcome!')
-          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 30000)
+          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 40000)
         });
     });
 
     describe('Sing Out after sign in', () => {
         it('Should to appear Sign Out button and after click should sign out the user', async () => {
-          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),30000)
+          await browser.wait(EC.visibilityOf(indexAuthentication.getWelcomeMessage()),40000)
           expect(await indexAuthentication.getWelcomeMessage().getText())
             .to.equal('Welcome!')
-          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 30000)
+          await browser.wait(EC.elementToBeClickable(indexAuthentication.getSignOutButton()), 40000)
           await indexAuthentication.clickSignOutButton()
         });
     });
